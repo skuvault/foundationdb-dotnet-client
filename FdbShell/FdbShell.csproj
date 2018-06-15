@@ -62,11 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoundationDB.Client\FoundationDB.Client.csproj">
-      <Project>{773166b7-de74-4fcc-845c-84080cc89533}</Project>
+      <Project>{3c304841-c92c-40bf-b860-461b7825b887}</Project>
       <Name>FoundationDB.Client</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\ILRepack.MSBuild.Task.1.0.9\build\ILRepack.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.MSBuild.Task.1.0.9\build\ILRepack.MSBuild.Task.targets') AND '$(OS)' == 'Windows_NT'" />
   <!-- ILRepack -->

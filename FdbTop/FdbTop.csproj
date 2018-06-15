@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoundationDB.Client\FoundationDB.Client.csproj">
-      <Project>{773166b7-de74-4fcc-845c-84080cc89533}</Project>
+      <Project>{3c304841-c92c-40bf-b860-461b7825b887}</Project>
       <Name>FoundationDB.Client</Name>
     </ProjectReference>
   </ItemGroup>
@@ -68,14 +68,7 @@
       <InputAssemblies Include="$(OutputPath)\$(AssemblyName).exe" />
       <InputAssemblies Include="$(OutputPath)\FoundationDB.Client.dll" />
     </ItemGroup>
-        <ILRepack
-            Parallel="true"
-            Internalize="true"
-            InternalizeExclude="@(DoNotInternalizeAssemblies)"
-            InputAssemblies="@(InputAssemblies)"
-            TargetKind="Exe"
-            OutputFile="$(OutputPath)\$(AssemblyName).Merged.exe"
-        />
+    <ILRepack Parallel="true" Internalize="true" InternalizeExclude="@(DoNotInternalizeAssemblies)" InputAssemblies="@(InputAssemblies)" TargetKind="Exe" OutputFile="$(OutputPath)\$(AssemblyName).Merged.exe" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
