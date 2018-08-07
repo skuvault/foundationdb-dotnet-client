@@ -38,7 +38,6 @@ namespace FoundationDB.Client.Native
 	internal sealed class UnmanagedLibrary : IDisposable
 	{
 		// See http://msdn.microsoft.com/msdnmag/issues/05/10/Reliability/ for more about safe handles.
-
 		[SuppressUnmanagedCodeSecurity]
 		public sealed class SafeLibraryHandle : SafeHandleZeroOrMinusOneIsInvalid
 		{
@@ -51,7 +50,6 @@ namespace FoundationDB.Client.Native
 				return true;
 			}
 		}
-
 
 		[SuppressUnmanagedCodeSecurity]
 		private static class NativeMethods
@@ -67,16 +65,12 @@ namespace FoundationDB.Client.Native
 
 			public static SafeLibraryHandle LoadLibraryForCurrentOS(string fileName)
 			{
-				if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-					return LoadLibrary(fileName);
+#if NETSTANDARD2_0
+				return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? LoadLibrary(fileName) : dlopen(fileName, 1);
+#else
 				return dlopen(fileName, 1);
-				
+#endif
 			}
-
-			//[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-			//[DllImport(KERNEL, SetLastError = true)]
-			//[return: MarshalAs(UnmanagedType.Bool)]
-			//public static extern bool FreeLibrary(IntPtr hModule);
 		}
 
 		/// <summary>Load a native library into the current process</summary>

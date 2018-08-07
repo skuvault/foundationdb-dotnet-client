@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 
@@ -237,10 +238,17 @@ namespace FoundationDB.Client.Native
 				try
 				{
 					if (string.IsNullOrWhiteSpace(Fdb.Options.NativeLibPath))
+					{
 						Fdb.Options.NativeLibPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
+					}
+#if NETSTANDARD2_0
 					var libraryExtension = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".dll" : ".so";
-					libraryPath = Path.Combine(Fdb.Options.NativeLibPath, FDB_C_DLL + libraryExtension);
+#else
+					var libraryExtension = ".dll";
+#endif
+
+					libraryPath = Path.Combine(Fdb.Options.NativeLibPath ?? throw new InvalidOperationException(), FDB_C_DLL + libraryExtension);
+
 					FdbCLib = UnmanagedLibrary.Load(libraryPath);
 				}
 				catch (Exception e)
@@ -867,7 +875,7 @@ namespace FoundationDB.Client.Native
 			}
 		}
 
-		#endregion
+#endregion
 
 	}
 
