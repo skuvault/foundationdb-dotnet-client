@@ -68,7 +68,7 @@ namespace FoundationDB.Client.Native
 #if NETSTANDARD2_0
 				return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? LoadLibrary(fileName) : dlopen(fileName, 1);
 #else
-				return dlopen(fileName, 1);
+				return LoadLibrary(fileName);
 #endif
 			}
 		}
